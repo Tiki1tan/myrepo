@@ -74,11 +74,14 @@ CREATE TABLE criminal (
 	Haircolor varchar(10) NOT NULL,
 	Height int NOT NULL,
 	Weight int NOT NULL,
-	Lived_At int NOT NULL,
-	Will_Live_At int,
-	FOREIGN KEY (Lived_At) REFERENCES residence(ResidenceID),
-	FOREIGN KEY (Will_Live_At) REFERENCES residence(ResidenceID),
 	PRIMARY KEY (DCNumber)
+);
+
+CREATE TABLE lived_at (
+	DCNumber varchar(6) NOT NULL,
+	address int NOT NULL,
+	FOREIGN KEY DCNumber,
+	FOREIGN KEY address
 );
 
 
