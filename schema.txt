@@ -1,0 +1,125 @@
+CREATE TABLE general_user(
+	PersonID int NOT NULL,
+	Username varchar(20) NOT NULL UNIQUE,
+	Password varchar(20) NOT NULL.
+	PRIMARY KEY (PersonID)
+);
+
+CREATE TABLE administrator(
+	AdminID int NOT NULL,
+	Username varchar(20) NOT NULL UNIQUE,
+	Password varchar(20) NOT NULL,
+	DateOfPassword date NOT NULL,
+	PRIMARY KEY (AdminID)
+);
+
+CREATE TABLE modification(
+	ModificationID int NOT NULL,
+	Date_modified timestamp NOT NULL,
+	AdminID int NOT NULL,
+	Description varchar(255) NOT NULL, 
+	Action varchar(20) NOT NULL
+	FOREIGN KEY (AdminID) References administrator(AdminID),
+	PRIMARY KEY (ModificationID)
+);
+
+
+CREATE TABLE alias (
+	AliasID int NOT NULL,
+	DCNumber varchar(6) NOT NULL,
+	LastName varchar(20) NOT NULL,
+	FirstName varchar(20) NOT NULL,
+	MiddleName varchar(20),
+	NameSuffix varchar(5),
+	PRIMARY KEY (AliasID),
+	FOREIGN KEY DCNumber references criminal(DCNumber)
+);
+
+
+CREATE TABLE body_mark (
+	MarkID int NOT NULL UNIQUE,
+	DCNumber varchar(6) NOT NULL,
+	Location varchar(255) NOT NULL,
+	Description varchar(255) NOT NULL,
+	PRIMARY KEY (MarkID),
+	FOREIGN KEY DCNumber references criminal(DCNumber)
+);
+
+
+
+CREATE TABLE county (
+	CountyID int NOT NULL,
+	CountyName varchar(20) NOT NULL UNIQUE,
+	Population int NOT NULL,
+	PRIMARY KEY (CountyID)
+);
+
+
+
+
+
+
+
+CREATE TABLE criminal (
+	DCNumber varchar(6) NOT NULL,
+	FirstName varchar(20) NOT NULL,
+	MiddleName varchar(20),
+	LastName varchar(20) NOT NULL,
+	NameSuffix varchar(5),
+	Picture blob NOT NULL,
+	Sex varchar(1) NOT NULL,
+	Birthdate date NOT NULL,
+	Race varchar(1) NOT NULL,
+	Eyecolor varchar(10) NOT NULL,
+	Haircolor varchar(10) NOT NULL,
+	Height int NOT NULL,
+	Weight int NOT NULL,
+	Lived_At int NOT NULL,
+	Will_Live_At int,
+	FOREIGN KEY (Lived_At) REFERENCES residence(ResidenceID),
+	FOREIGN KEY (Will_Live_At) REFERENCES residence(ResidenceID),
+	PRIMARY KEY (DCNumber)
+);
+
+
+CREATE TABLE residence (
+	ResidenceID int NOT NULL,
+	DCNumber varchar(6) NOT NULL,
+	AddressLine1 varchar(255) NOT NULL,
+	AddressLine2 varchar(255),
+	City varchar(20) NOT NULL,
+	ZipCode int NOT NULL,
+	PRIMARY KEY (ResidenceID),
+	FOREIGN KEY DCNumber references criminal(DCNumber),
+);
+
+CREATE TABLE facility (
+	FacilityID int NOT NULL,
+	CountyID int NOT NULL,
+	AddressLine1 varchar(255) NOT NULL,
+	City varchar(20) NOT NULL,
+	ZipCode int NOT NULL
+	PRIMARY KEY (FacilityID),
+	FOREIGN KEY CountyID references county(CountyID)
+);
+
+CREATE TABLE county (
+	CountyID int NOT NULL,
+	CountyName varchar(20) NOT NULL UNIQUE,
+	Population int NOT NULL,
+	PRIMARY KEY (CountyID)
+);
+
+CREATE TABLE criminal_offense(
+	DCNumber varchar(6) NOT NULL,
+	sequence int NOT NULL,
+	OffenseDate date NOT NULL,
+	AdjudicationDate date NOT NULL,
+	OffenseCounty varchar(20) NOT NULL,
+	Adjudication varchar(255) NOT NULL,
+	isActive boolean NOT NULL,
+	OffenseID int NOT NULL
+	PRIMARY KEY (OffenseID),
+	FOREIGN KEY DCNumber references criminal(DCNumber)
+);
+
