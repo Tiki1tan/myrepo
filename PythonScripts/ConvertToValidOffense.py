@@ -71,7 +71,7 @@ def main():
     isActive = input()
     
     tLines = []
-    currNum = 382002
+    currNum = 1
     for line in lines:
         tLines.append(createValuesLine(line, currNum, name, isActive))
         currNum += 1
