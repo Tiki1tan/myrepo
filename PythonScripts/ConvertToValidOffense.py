@@ -18,16 +18,21 @@ def readLines(arr):
         print(line)
         
 def createHeaderInsertLine():
-    val = "INSERT ALL \n"
+    val = "SET DEFINE OFF;\n"
+    val = val + "\nINSERT ALL\n"
     return val
     
 def createValuesLine(line, num, name, isActive):
-    val = "INTO " + name + " VALUES "
+    val = "INSERT INTO " + name + " VALUES "
     val =  val + "('" + str(num) + "','"
     val = val + '\',\''.join(line)
-    val = val + "','" + isActive + "')" #active offenses
+    val = val + "','" + isActive + "');" #active offenses
     val = replace(val)
     val = toDate(val)
+    #if num%10 == 0:
+        #val = val + "\nSELECT * FROM dual;\n"
+        #val = val + "SET DEFINE OFF;\n"
+        #val = val + "\nINSERT ALL"
     return val
         
 def replace(line):
@@ -43,26 +48,16 @@ def toDate(line):
     line = ",".join(words)
     return line
 
-def test():
-    s = "INSERT INTO offense VALUES ('1','000371','1','3/16/1970','3/16/1970','ORANGE','0200000','SEXUAL BATTERY UNSPECIFIED',Y)"
-    words = s.split(",")
-    #test = ",".join(words)
-
-    words[3] = "TO_DATE(" + words[3] + ",'MM/DD/YYYY')"
-    words[4] = "TO_DATE(" + words[4] + ",'MM/DD/YYYY')"
-    test = ",".join(words)
-    return test
 
 def main():
     print("Please enter the filepath of the file you would like to transform")
     filepath = input()
-    #filepath = 'INMATE_ACTIVE_ALIASES.csv'
     lines = getLines(filepath)
     
     print("What is the name of the file that you would like to produce?")
     targetfile = input()
     f = open(targetfile, 'w')
-    f.write(createHeaderInsertLine())
+    #f.write(createHeaderInsertLine())
     
     print("What is the table name?")
     name = input()
@@ -71,11 +66,11 @@ def main():
     isActive = input()
     
     tLines = []
-    currNum = 1
+    currNum = 382002
     for line in lines:
         tLines.append(createValuesLine(line, currNum, name, isActive))
         currNum += 1
     
     f.write(' \n'.join(tLines))
-    f.write('\nSELECT * FROM dual;')
+
     
