@@ -18,14 +18,14 @@ def readLines(arr):
         print(line)
         
 def createHeaderInsertLine():
-    val = "SET DEFINE OFF\nINSERT ALL \n"
+    val = "SET DEFINE OFF;\n"
     return val
     
 def createValuesLine(line, num, name):
-    val = "INTO " + name + " VALUES "
-    val = val + "('" + str(num) + "',"
+    val = "INSERT INTO " + name + " VALUES "
+    val = val + "('" + str(num) + "','"
     val = val + '\',\''.join(line)
-    val = val + "')"
+    val = val + "');"
     return val
 
 def main():
@@ -44,6 +44,8 @@ def main():
     
 
     tLines = []
+    
+    #last inmate alias value: 498913
     currNum = 1
 
     for line in lines:
