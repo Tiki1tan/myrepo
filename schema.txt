@@ -74,6 +74,7 @@ CREATE TABLE criminal (
 	Haircolor varchar(10) NOT NULL,
 	Height int NOT NULL,
 	Weight int NOT NULL,
+	Custody varchar(255) NOT NULL,
 	Type varchar(255) NOT NULL, /*INMATE or OFFENDER*/
 	PRIMARY KEY (DCNumber)
 );
