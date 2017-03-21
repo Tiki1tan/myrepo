@@ -74,6 +74,7 @@ CREATE TABLE criminal (
 	Haircolor varchar(10) NOT NULL,
 	Height int NOT NULL,
 	Weight int NOT NULL,
+	Type varchar(255) NOT NULL, /*INMATE or OFFENDER*/
 	PRIMARY KEY (DCNumber)
 );
 
@@ -98,10 +99,10 @@ CREATE TABLE residence (
 
 CREATE TABLE facility (
 	FacilityID int NOT NULL,
+	Name varchar(255) NOT NULL,
 	CountyID int NOT NULL,
-	AddressLine1 varchar(255) NOT NULL,
 	City varchar(20) NOT NULL,
-	ZipCode int NOT NULL
+	ZipCode int NOT NULL,
 	PRIMARY KEY (FacilityID),
 	FOREIGN KEY CountyID references county(CountyID)
 );
