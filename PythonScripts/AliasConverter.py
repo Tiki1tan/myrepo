@@ -8,7 +8,7 @@ import re
 def getLines(filePath):
     rows = []
     with open(filePath, 'r') as csvfile:
-        reader = csv.reader(csvfile, delimiter=',', quotechar='\'')
+        reader = csv.reader(csvfile, delimiter='_', quotechar='\'')
         for row in reader:
             rows.append(row)
     return rows
@@ -19,13 +19,19 @@ def readLines(arr):
         
 def createHeaderInsertLine():
     val = "SET DEFINE OFF;\n"
+    val = val + "INSERT ALL\n"
     return val
     
 def createValuesLine(line, num, name):
-    val = "INSERT INTO " + name + " VALUES "
+    val = "INTO " + name + " VALUES "
     val = val + "('" + str(num) + "','"
     val = val + '\',\''.join(line)
-    val = val + "');"
+    val = val + "')"
+    if num%50 == 0:
+        val = val + "\nSELECT * FROM dual;"
+        val = val + "\nSET DEFINE OFF;"
+        val = val + "\nINSERT ALL\n"
+        
     return val
 
 def main():
@@ -46,12 +52,16 @@ def main():
     tLines = []
     
     #last inmate alias value: 498913
-    currNum = 1
+    print("currNum = ?")
+    print("last inmate alias value: 498913")
+    currNum = int(input())
+    
 
     for line in lines:
         tLines.append(createValuesLine(line, currNum, name))
         currNum += 1
     
     f.write(' \n'.join(tLines))
-    f.write('\nSELECT * FROM dual;')
+    f.write("SELECT * FROM dual;")
+
     
