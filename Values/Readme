@@ -1,2 +1,8 @@
 See Slack #table_values
 Files are too large to upload here
+Information in County and Facility was extracted from the World Wide Web.
+INformation in imprisoned was a result of the Microsoft Access query translated to SQL Oracle:
+
+SELECT a.DCNumber, b.FacilityID
+FROM criminal a, facility b
+WHERE a.FACILITY_description = b.FACILITY_description;
