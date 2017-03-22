@@ -83,9 +83,9 @@ CREATE TABLE criminal (
 
 CREATE TABLE lives_at (
 	DCNumber varchar(6) NOT NULL,
-	address int NOT NULL,
-	FOREIGN KEY DCNumber,
-	FOREIGN KEY address
+	ResidenceID int NOT NULL,
+	FOREIGN KEY (DCNumber),
+	FOREIGN KEY (ResidenceID)
 );
 
 
