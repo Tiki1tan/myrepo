@@ -76,10 +76,12 @@ CREATE TABLE criminal (
 	Weight int NOT NULL,
 	Custody varchar(255) NOT NULL,
 	Type varchar(255) NOT NULL, /*INMATE or OFFENDER*/
-	PRIMARY KEY (DCNumber)
+	imprisoned_in int NOT NULL,
+	PRIMARY KEY (DCNumber),
+	FOREIGN KEY IMPRISONED_IN references facility(FacilityID)
 );
 
-CREATE TABLE lived_at (
+CREATE TABLE lives_at (
 	DCNumber varchar(6) NOT NULL,
 	address int NOT NULL,
 	FOREIGN KEY DCNumber,
@@ -88,12 +90,22 @@ CREATE TABLE lived_at (
 
 
 CREATE TABLE residence (
+/*
+AddressLine1 can be as normal or:
+DEPORTED - county_name............. and all other fields afterwards (except state) are blank
+ABSCONDER - county_name.............. and all other fields afterwards (except state) are blank
+ABSCONDER....... and City is "ABSCONDER", State is "FL", and Zipcode "99999"
+county_name................ and all other fields afterwards are blank
+OTHER STATE PRISON........ and AddressLine2 is "OS PRISON" and all the rest are blank
+ABSCONDER...... and AddressLine2 is "ABSCONDER", and city, state, and zipcode are filled
+*/
 	ResidenceID int NOT NULL,
 	DCNumber varchar(6) NOT NULL,
-	AddressLine1 varchar(255) NOT NULL,
+	AddressLine1 varchar(255),
 	AddressLine2 varchar(255),
-	City varchar(20) NOT NULL,
-	ZipCode int NOT NULL,
+	City varchar(20),
+	ZipCode int,
+	State varchar(20),
 	PRIMARY KEY (ResidenceID),
 	FOREIGN KEY DCNumber references criminal(DCNumber),
 );
@@ -128,3 +140,19 @@ CREATE TABLE criminal_offense(
 	FOREIGN KEY DCNumber references criminal(DCNumber)
 );
 
+CREATE TABLE offenseCategory (
+	Name varchar(255),
+	Description varchar(255)
+);
+
+CREATE TABLE incarceration_history (
+	DCNumber varchar(6) NOT NULL,
+	ReceiptDate date NOT NULL,
+	ReleaseDate date,
+	FOREIGN KEY DCNumber references criminal(DCNumber)
+);
+
+CREATE TABLE Zipcode (
+	Zipcode int NOT NULL,
+	County varchar(20) NOT NULL
+);
