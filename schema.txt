@@ -107,7 +107,7 @@ ABSCONDER...... and AddressLine2 is "ABSCONDER", and city, state, and zipcode ar
 	ZipCode int,
 	State varchar(20),
 	PRIMARY KEY (ResidenceID),
-	FOREIGN KEY DCNumber references criminal(DCNumber),
+	FOREIGN KEY (DCNumber) references criminal(DCNumber),
 );
 
 CREATE TABLE facility (
@@ -117,7 +117,7 @@ CREATE TABLE facility (
 	City varchar(20) NOT NULL,
 	ZipCode int NOT NULL,
 	PRIMARY KEY (FacilityID),
-	FOREIGN KEY CountyID references county(CountyID)
+	FOREIGN KEY (CountyID) references county(CountyID)
 );
 
 CREATE TABLE county (
@@ -137,7 +137,7 @@ CREATE TABLE criminal_offense(
 	isActive boolean NOT NULL,
 	OffenseID int NOT NULL
 	PRIMARY KEY (OffenseID),
-	FOREIGN KEY DCNumber references criminal(DCNumber)
+	FOREIGN KEY (DCNumber) references criminal(DCNumber)
 );
 
 CREATE TABLE offenseCategory (
@@ -149,10 +149,17 @@ CREATE TABLE incarceration_history (
 	DCNumber varchar(6) NOT NULL,
 	ReceiptDate date NOT NULL,
 	ReleaseDate date,
-	FOREIGN KEY DCNumber references criminal(DCNumber)
+	FOREIGN KEY (DCNumber) references criminal(DCNumber)
 );
 
 CREATE TABLE Zipcode (
 	Zipcode int NOT NULL,
 	County varchar(20) NOT NULL
+);
+
+CREATE TABLE imprisoned (
+	DCNumber varchar(6) NOT NULL,
+	FacilityID int NOT NULL,
+	FOREIGN KEY (DCNumber),
+	FOREIGN KEY (FacilityID)
 );
