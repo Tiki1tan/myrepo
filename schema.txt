@@ -55,31 +55,47 @@ CREATE TABLE county (
 );
 
 
-
-
-
-
-
-CREATE TABLE criminal (
+CREATE TABLE inmate (
 	DCNumber varchar(6) NOT NULL,
-	FirstName varchar(20) NOT NULL,
-	MiddleName varchar(20),
 	LastName varchar(20) NOT NULL,
+	FistName varchar(20),
+	MiddleName varchar(20) NOT NULL,
 	NameSuffix varchar(5),
-	Picture blob NOT NULL,
+	Race varchar(1) NOT NULL,
 	Sex varchar(1) NOT NULL,
 	Birthdate date NOT NULL,
-	Race varchar(1) NOT NULL,
-	Eyecolor varchar(10) NOT NULL,
-	Haircolor varchar(10) NOT NULL,
-	Height int NOT NULL,
-	Weight int NOT NULL,
-	Custody varchar(255) NOT NULL,
-	Type varchar(255) NOT NULL, /*INMATE or OFFENDER*/
-	imprisoned_in int NOT NULL,
-	PRIMARY KEY (DCNumber),
-	FOREIGN KEY IMPRISONED_IN references facility(FacilityID)
+	HairColor varchar(10) NOT NULL,
+	EyeColor varchar(10) NOT NULL,
+	Height int,
+	Weight int,
+	PrisonReleaseDate date,
+	ReceiptDate date,
+	ReleaseDateDescription varchar(255),
+	Custody varchar(255),
+	PRIMARY KEY (DCNumber)
 );
+
+CREATE TABLE offender (
+	DCNumber varchar(6) NOT NULL,
+	LastName varchar(20) NOT NULL,
+	FistName varchar(20),
+	MiddleName varchar(20) NOT NULL,
+	NameSuffix varchar(5),
+	Race varchar(1) NOT NULL,
+	Sex varchar(1) NOT NULL,
+	Birthdate date NOT NULL,
+	HairColor varchar(10) NOT NULL,
+	EyeColor varchar(10) NOT NULL,
+	Height int,
+	Weight int,
+	SupervisionTermination date,
+	ReceiptDate date,
+	SupvType varchar(255),
+	SupvStatus varchar(255),
+	PRIMARY KEY (DCNumber)
+);
+
+
 
 CREATE TABLE lives_at (
 	DCNumber varchar(6) NOT NULL,
