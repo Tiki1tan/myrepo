@@ -1,0 +1,19 @@
+{
+  "name": "cis4301",
+  "version": "1.0.0",
+  "description": "Criminal Database",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexanderRumak/CIS4301--ClassProject.git"
+  },
+  "author": "hugh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexanderRumak/CIS4301--ClassProject/issues"
+  },
+  "homepage": "https://github.com/AlexanderRumak/CIS4301--ClassProject#readme"
+}
